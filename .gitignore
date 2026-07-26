@@ -1,0 +1,11 @@
+.DS_Store
+
+# Source files kept locally, but not needed for the GitHub Pages site.
+2025 ASCE VIMs Datathon Final-Liqun1.pptx
+2025 Datathon Instructions-Badger.docx
+video demo/
+
+# Temporary extraction folders.
+.asset-inspect/
+tmp/
+*.tmp
