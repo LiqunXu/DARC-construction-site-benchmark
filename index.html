@@ -40,15 +40,16 @@
           <img src="assets/img/site-overview.png" alt="" />
         </div>
         <div class="hero-content">
-          <p class="eyebrow">Isaac Sim + Isaac Lab virtual construction environment</p>
+          <p class="eyebrow">Construction-aware robot navigation benchmark</p>
           <h1 id="hero-title">DARC Construction Site Benchmark</h1>
           <p class="hero-copy">
-            A physics-enabled digital twin of construction sites for robot training, testing,
-            simulation, and reproducible benchmark evaluation.
+            A physics-enabled Isaac Sim and Isaac Lab environment for training and testing robots
+            that must navigate active construction sites without creating safety violations or
+            disrupting ongoing work.
           </p>
           <div class="hero-actions" aria-label="Primary links">
             <a class="button primary" href="#demos">Watch demos</a>
-            <a class="button" href="#benchmark">Benchmark protocol</a>
+            <a class="button" href="#benchmark">Task suites</a>
             <a class="button ghost" href="https://github.com/LiqunXu" target="_blank" rel="noreferrer">GitHub</a>
           </div>
         </div>
@@ -56,33 +57,63 @@
 
       <section class="section split" id="overview" aria-labelledby="overview-title">
         <div class="section-heading">
-          <p class="eyebrow">Research objective</p>
-          <h2 id="overview-title">Physics-Enabled Digital Twins of Construction Sites</h2>
+          <p class="eyebrow">Overview</p>
+          <h2 id="overview-title">From Jobsite Navigation Hazards to Reproducible Simulation</h2>
           <p>
-            The environment combines visual fidelity, physical fidelity, interactive construction
-            equipment, and robot simulation to support training and evaluation in construction contexts.
+            Construction robots are increasingly used for inspection, progress monitoring, and
+            site logistics, but current navigation stacks are often evaluated in clean or static
+            settings. Real jobsites are different: terrain changes, materials move, workers and
+            machines create temporary exclusion zones, and a robot can fail even when it avoids
+            direct collision.
+          </p>
+          <p>
+            This benchmark turns construction-specific navigation hazards into controlled,
+            repeatable simulation tasks. The goal is to evaluate whether a robot can reach its
+            destination while respecting site safety rules, equipment work envelopes, access
+            routes, material staging areas, and ongoing construction activities.
           </p>
         </div>
         <div class="feature-list">
           <article>
             <span>01</span>
-            <h3>Visual Fidelity</h3>
-            <p>Realistic site layout, materials, textures, machinery, and construction objects derived from project references.</p>
+            <h3>Construction-aware safety</h3>
+            <p>Safety is defined beyond collision avoidance: robots should avoid interfering with work, entering restricted zones, blocking access paths, or moving through equipment operating areas.</p>
           </article>
           <article>
             <span>02</span>
-            <h3>Physical Fidelity</h3>
-            <p>Collision meshes, physics parameters, articulated joints, and controlled interactions in Isaac Sim.</p>
+            <h3>Perception-centered hazards</h3>
+            <p>The benchmark targets failures in self-perception, semantic understanding, affordance reasoning, and context awareness observed during real construction-site robot navigation.</p>
           </article>
           <article>
             <span>03</span>
-            <h3>Interactive Equipment</h3>
-            <p>Tower crane and wheel loader controllers for material handling and earth-moving style operations.</p>
+            <h3>Multi-platform simulation</h3>
+            <p>The environment supports robots and construction equipment, including quadrupeds, forklifts, wheel loaders, excavators, trucks, and tower cranes.</p>
           </article>
           <article>
             <span>04</span>
-            <h3>Robot Simulation</h3>
-            <p>Unitree B2 quadruped locomotion trained with PPO in Isaac Lab for site navigation experiments.</p>
+            <h3>Benchmark-ready structure</h3>
+            <p>Scenes, tasks, safety rules, synthetic data collection, and held-out testing splits are organized for repeatable comparison of construction navigation methods.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section compact" aria-labelledby="why-title">
+        <div class="section-heading">
+          <p class="eyebrow">Motivation</p>
+          <h2 id="why-title">Why Construction Navigation Needs Its Own Benchmark</h2>
+        </div>
+        <div class="insight-grid">
+          <article>
+            <h3>Geometry is not enough</h3>
+            <p>On active jobsites, a traversable-looking surface may be unsafe, unfinished, reserved for work, or functionally blocked by temporary material staging.</p>
+          </article>
+          <article>
+            <h3>Hazards are contextual</h3>
+            <p>A route can become invalid because of a moving truck, active lifting operation, worker activity, temporary barrier, or changing construction sequence.</p>
+          </article>
+          <article>
+            <h3>Success is not just arrival</h3>
+            <p>A robot should be evaluated on whether it reaches the target while respecting safety rules, protecting site elements, and minimizing disruption to construction operations.</p>
           </article>
         </div>
       </section>
@@ -90,7 +121,12 @@
       <section class="section media-band" id="environment" aria-labelledby="environment-title">
         <div class="section-heading">
           <p class="eyebrow">Environment library</p>
-          <h2 id="environment-title">Scenes, Assets, Robots, and Controllers</h2>
+          <h2 id="environment-title">Scenes, Assets, Robots, and Construction Equipment</h2>
+          <p>
+            The virtual environment is built around the operational features that make construction
+            navigation difficult: unfinished structures, staged materials, temporary routes, active
+            equipment, uneven terrain, and indoor-outdoor transitions.
+          </p>
         </div>
         <div class="gallery">
           <figure class="wide">
@@ -103,73 +139,84 @@
           </figure>
           <figure>
             <img src="assets/img/modeling-pipeline.png" alt="Machinery modeling pipeline" />
-            <figcaption>Machinery modeling pipeline.</figcaption>
+            <figcaption>Construction equipment asset pipeline.</figcaption>
           </figure>
           <figure>
             <img src="assets/img/wheel-loader.gif" alt="Wheel loader articulation preview" />
-            <figcaption>Wheel loader articulation.</figcaption>
+            <figcaption>Wheel loader interaction preview.</figcaption>
           </figure>
           <figure>
             <img src="assets/img/quadruped-sim.png" alt="Quadruped robot simulation in the virtual construction environment" />
-            <figcaption>Unitree B2 simulation.</figcaption>
+            <figcaption>Mobile robot navigation in the site.</figcaption>
           </figure>
           <figure>
-            <img src="assets/img/omnigraph-controller.png" alt="OmniGraph controller nodes for interactive machinery control" />
-            <figcaption>OmniGraph controller.</figcaption>
+            <img src="assets/img/tower-crane-preview.png" alt="Tower crane simulation preview" />
+            <figcaption>Tower crane and lifting zone context.</figcaption>
           </figure>
         </div>
       </section>
 
       <section class="section" id="benchmark" aria-labelledby="benchmark-title">
         <div class="section-heading">
-          <p class="eyebrow">Benchmark portal</p>
-          <h2 id="benchmark-title">Task Suites and Evaluation Protocol</h2>
+          <p class="eyebrow">Benchmark protocol</p>
+          <h2 id="benchmark-title">Navigation Task Suites and Evaluation Protocol</h2>
           <p>
-            This scaffold is ready for formal benchmark release: task splits, metrics, baselines,
-            leaderboard submission, and reproducibility documents can be filled in as experiments mature.
+            The benchmark focuses on construction-aware navigation. Agents are evaluated in
+            simulated jobsites with changing layouts, temporary safety constraints, staged
+            materials, and nearby construction equipment.
           </p>
         </div>
         <div class="benchmark-grid">
           <article>
-            <h3>Task Suites</h3>
+            <h3>Map-Based Navigation</h3>
             <ul>
-              <li>Tower crane material transport</li>
-              <li>Wheel loader material handling</li>
-              <li>Quadruped robot site navigation</li>
-              <li>Multi-agent site operation scenarios</li>
+              <li>Navigate from start to goal using a site map or waypoint graph</li>
+              <li>Respect walkable zones, site boundaries, and temporary closures</li>
+              <li>Measure progress in known and partially updated maps</li>
             </ul>
           </article>
           <article>
-            <h3>Metrics</h3>
+            <h3>Instruction Navigation</h3>
             <ul>
-              <li>Task success rate</li>
-              <li>Completion time</li>
-              <li>Collision and safety violations</li>
-              <li>Path efficiency and stability</li>
+              <li>Follow natural-language instructions grounded in construction semantics</li>
+              <li>Resolve targets such as workface, access gate, material laydown area, or equipment zone</li>
+              <li>Handle route constraints expressed as safety or work-sequence instructions</li>
             </ul>
+          </article>
+          <article>
+            <h3>Object and Asset Navigation</h3>
+            <ul>
+              <li>Navigate to construction objects by category or instance</li>
+              <li>Find equipment, pallets, pipes, scaffolds, doors, trucks, and staging areas</li>
+              <li>Test object permanence and semantic recognition under clutter</li>
+            </ul>
+          </article>
+          <article>
+            <h3>Safety-Rule Navigation</h3>
+            <ul>
+              <li>Avoid crane swing radius, equipment blind spots, excavation edges, and exclusion zones</li>
+              <li>Yield to active work and avoid blocking workers, trucks, or material flow</li>
+              <li>Penalize rule violations even when the robot reaches the goal</li>
+            </ul>
+          </article>
+        </div>
+        <div class="protocol-grid" aria-label="Benchmark protocol">
+          <article>
+            <h3>Metrics</h3>
+            <p>Success rate, path efficiency, SPL, completion time, rule violations, proximity events, stuck events, work-interference events, and context-sensitive safety failures.</p>
           </article>
           <article>
             <h3>Splits</h3>
-            <ul>
-              <li>Training scenes</li>
-              <li>Validation layouts</li>
-              <li>Held-out site configurations</li>
-              <li>Domain-randomized evaluation</li>
-            </ul>
+            <p>Synthetic data collection, model development, validation, model testing, held-out layouts, and stress tests with unseen material placement and equipment activity.</p>
           </article>
           <article>
-            <h3>Baselines</h3>
-            <ul>
-              <li>PPO locomotion baseline</li>
-              <li>Keyboard controller reference</li>
-              <li>Scripted equipment controller</li>
-              <li>Learning-based policies to be added</li>
-            </ul>
+            <h3>Embodiments</h3>
+            <p>Quadruped robots and site equipment such as forklifts, wheel loaders, excavators, trucks, and tower cranes can appear as agents, obstacles, or operational context.</p>
           </article>
         </div>
         <div class="leaderboard" aria-labelledby="leaderboard-title">
           <div>
-            <p class="eyebrow">Leaderboard preview</p>
+            <p class="eyebrow">Leaderboard</p>
             <h3 id="leaderboard-title">Submission Table</h3>
           </div>
           <div class="table-wrap">
@@ -185,25 +232,11 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>PPO Unitree B2</td>
-                  <td>Quadruped navigation</td>
-                  <td>Pending formal eval</td>
-                  <td>Pending</td>
-                  <td><span class="status">Baseline</span></td>
-                </tr>
-                <tr>
-                  <td>Keyboard controller</td>
-                  <td>Tower crane / wheel loader</td>
-                  <td>Reference only</td>
-                  <td>Reference only</td>
-                  <td><span class="status muted">Control</span></td>
-                </tr>
-                <tr>
-                  <td>External submission</td>
-                  <td>All suites</td>
-                  <td>To be released</td>
-                  <td>To be released</td>
-                  <td><span class="status muted">Planned</span></td>
+                  <td>To do</td>
+                  <td>To do</td>
+                  <td>To do</td>
+                  <td>To do</td>
+                  <td><span class="status muted">To do</span></td>
                 </tr>
               </tbody>
             </table>
@@ -214,16 +247,57 @@
       <section class="section" id="demos" aria-labelledby="demos-title">
         <div class="section-heading">
           <p class="eyebrow">Video demos</p>
-          <h2 id="demos-title">Interactive Equipment and Robot Simulation</h2>
+          <h2 id="demos-title">Real Jobsite Evidence and Simulation Demos</h2>
+          <p>
+            The real-world clips show the type of construction context the benchmark is designed
+            to reproduce: workers, moving equipment, material piles, indoor unfinished spaces,
+            rough terrain, and temporary access constraints.
+          </p>
         </div>
         <div class="video-grid">
+          <article>
+            <video controls preload="metadata" poster="assets/img/poster-jobsite-outdoor-obstacles.jpg">
+              <source src="assets/videos/jobsite-outdoor-obstacles.mp4" type="video/mp4" />
+            </video>
+            <div>
+              <h3>Outdoor Jobsite Navigation</h3>
+              <p>Real-world traversal near materials, workers, scaffolding, and active construction zones.</p>
+            </div>
+          </article>
+          <article>
+            <video controls preload="metadata" poster="assets/img/poster-jobsite-material-zone.jpg">
+              <source src="assets/videos/jobsite-material-zone.mp4" type="video/mp4" />
+            </video>
+            <div>
+              <h3>Material Staging Area</h3>
+              <p>Navigation through dense laydown areas where objects carry functional and safety meaning.</p>
+            </div>
+          </article>
+          <article>
+            <video controls preload="metadata" poster="assets/img/poster-jobsite-indoor-workface.jpg">
+              <source src="assets/videos/jobsite-indoor-workface.mp4" type="video/mp4" />
+            </video>
+            <div>
+              <h3>Indoor Workface</h3>
+              <p>Traversal in unfinished interior spaces with temporary work activity and changing access paths.</p>
+            </div>
+          </article>
+          <article>
+            <video controls preload="metadata" poster="assets/img/poster-jobsite-equipment-proximity.jpg">
+              <source src="assets/videos/jobsite-equipment-proximity.mp4" type="video/mp4" />
+            </video>
+            <div>
+              <h3>Equipment Proximity</h3>
+              <p>Navigation near earth-moving equipment where safety depends on work-envelope awareness.</p>
+            </div>
+          </article>
           <article>
             <video controls preload="metadata" poster="assets/img/poster-towercrane.jpg">
               <source src="assets/videos/tower-crane-demo.mp4" type="video/mp4" />
             </video>
             <div>
-              <h3>Tower Crane Moving Material</h3>
-              <p>Keyboard-driven crane boom, hook, and payload interaction inside the construction site.</p>
+              <h3>Tower Crane Scene</h3>
+              <p>Simulated lifting context for evaluating route planning around crane operation areas.</p>
             </div>
           </article>
           <article>
@@ -231,8 +305,8 @@
               <source src="assets/videos/wheel-loader-demo.mp4" type="video/mp4" />
             </video>
             <div>
-              <h3>Wheel Loader Moving Material</h3>
-              <p>USD machinery model with articulated joints, collision meshes, and bucket controller.</p>
+              <h3>Wheel Loader Scene</h3>
+              <p>Construction equipment context for testing navigation around active machinery and material flow.</p>
             </div>
           </article>
           <article>
@@ -240,8 +314,8 @@
               <source src="assets/videos/quadruped-demo.mp4" type="video/mp4" />
             </video>
             <div>
-              <h3>Quadruped Robot Walking</h3>
-              <p>Unitree B2 locomotion demo trained in Isaac Lab and deployed in the virtual site.</p>
+              <h3>Robot Navigation in Simulation</h3>
+              <p>Mobile robot traversal in the virtual construction site for navigation evaluation.</p>
             </div>
           </article>
         </div>
@@ -250,28 +324,28 @@
       <section class="section split" id="resources" aria-labelledby="resources-title">
         <div class="section-heading">
           <p class="eyebrow">Resources</p>
-          <h2 id="resources-title">Quick Start, Controls, and Release Checklist</h2>
+          <h2 id="resources-title">Resources and Release Checklist</h2>
           <p>
-            The current project materials include slide documentation, run instructions, and local
-            demo videos. This section is prepared for downloadable assets and documentation.
+            The current website is prepared for an academic release package: simulator assets,
+            task definitions, synthetic data scripts, evaluation code, and documentation.
           </p>
         </div>
         <div class="resource-panel">
           <article>
-            <h3>Isaac Lab Run Entry</h3>
-            <code>python scripts/rsl_rl/base/play.py --task RobotLab-Isaac-Velocity-Rough-Unitree-B2-v0 --checkpoint="checkpoints/model_1900.pt" --keyboard</code>
+            <h3>Planned Release Items</h3>
+            <p>Isaac Sim scene files, construction asset library, robot and equipment configurations, task JSON files, and benchmark evaluation scripts.</p>
           </article>
           <article>
-            <h3>Tower Crane Controls</h3>
-            <p>W/S move cargo, A/D rotate boom, Q/E raise or lower hook.</p>
+            <h3>Synthetic Data Collection</h3>
+            <p>Scene randomization, route generation, object annotations, safety-rule labels, and navigation demonstrations for training and analysis.</p>
           </article>
           <article>
-            <h3>Wheel Loader Controls</h3>
-            <p>Numpad 5/2 drive, 1/3 steer, 4/6 boom, 7/9 bucket.</p>
+            <h3>Documentation</h3>
+            <p>Installation, environment setup, task API, metric definitions, safety-rule specification, and submission format will be documented with the benchmark release.</p>
           </article>
           <article>
-            <h3>Quadruped Controls</h3>
-            <p>Arrow keys translate, Z/X rotate after launching the Isaac Lab keyboard policy.</p>
+            <h3>Repository</h3>
+            <p><a href="https://github.com/LiqunXu/darc-construction-site-benchmark" target="_blank" rel="noreferrer">GitHub repository</a> for the project website and future benchmark materials.</p>
           </article>
         </div>
       </section>
