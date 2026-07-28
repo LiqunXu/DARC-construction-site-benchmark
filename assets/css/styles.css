@@ -484,15 +484,6 @@ tr:last-child td {
   line-height: 1.25;
 }
 
-.risk-label {
-  margin: 0 0 8px;
-  color: var(--red);
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
 .media-band {
   width: 100%;
   max-width: none;
