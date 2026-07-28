@@ -60,17 +60,17 @@
           <p class="eyebrow">Overview</p>
           <h2 id="overview-title">From Jobsite Navigation Hazards to Reproducible Simulation</h2>
           <p>
-            Construction robots are increasingly used for inspection, progress monitoring, and
-            site logistics, but current navigation stacks are often evaluated in clean or static
-            settings. Real jobsites are different: terrain changes, materials move, workers and
-            machines create temporary exclusion zones, and a robot can fail even when it avoids
-            direct collision.
+            In construction, navigation failure is not limited to collision or timeout. A robot can
+            reach a waypoint and still fail the jobsite: entering an equipment work range,
+            crossing a cordoned area, damaging temporary protection, slipping on loose gravel,
+            catching a leg in staged material, or undoing cleanup work that a crew just completed.
           </p>
           <p>
-            This benchmark turns construction-specific navigation hazards into controlled,
-            repeatable simulation tasks. The goal is to evaluate whether a robot can reach its
-            destination while respecting site safety rules, equipment work envelopes, access
-            routes, material staging areas, and ongoing construction activities.
+            DARC Construction Site Benchmark starts from these in-the-wild navigation hazards and
+            converts them into controlled, repeatable Isaac Sim and Isaac Lab scenarios. The goal
+            is to evaluate construction-aware navigation: whether a robot can make progress while
+            respecting the operational meaning of temporary safety boundaries, equipment work
+            envelopes, access routes, material staging areas, fragile fixtures, and ongoing work.
           </p>
         </div>
         <div class="feature-list">
@@ -81,19 +81,87 @@
           </article>
           <article>
             <span>02</span>
-            <h3>Perception-centered hazards</h3>
-            <p>The benchmark targets failures in self-perception, semantic understanding, affordance reasoning, and context awareness observed during real construction-site robot navigation.</p>
-          </article>
-          <article>
-            <span>03</span>
             <h3>Multi-platform simulation</h3>
             <p>The environment supports robots and construction equipment, including quadrupeds, forklifts, wheel loaders, excavators, trucks, and tower cranes.</p>
           </article>
           <article>
-            <span>04</span>
+            <span>03</span>
             <h3>Benchmark-ready structure</h3>
             <p>Scenes, tasks, safety rules, synthetic data collection, and held-out testing splits are organized for repeatable comparison of construction navigation methods.</p>
           </article>
+        </div>
+        <div class="risk-evidence" aria-labelledby="risk-title">
+          <div class="section-heading">
+            <p class="eyebrow">Field evidence</p>
+            <h3 id="risk-title">Six Navigation Risks Observed on Real Jobsites</h3>
+            <p>
+              These clips motivate the benchmark design: each failure mode is hard to capture with
+              ordinary collision metrics, but directly affects whether a robot can be safely deployed
+              around people, materials, equipment, and unfinished work.
+            </p>
+          </div>
+          <div class="risk-grid">
+            <article>
+              <video controls preload="metadata" poster="assets/img/poster-jobsite-material-zone.jpg">
+                <source src="assets/videos/jobsite-material-zone.mp4" type="video/mp4" />
+              </video>
+              <div>
+                <p class="risk-label">Terrain contact</p>
+                <h3>Leg Stuck in Wood Pallet</h3>
+                <p>Staged materials can trap feet or change the effective body envelope, exposing risks that are not captured by simple obstacle clearance.</p>
+              </div>
+            </article>
+            <article>
+              <video controls preload="metadata" poster="assets/img/poster-jobsite-outdoor-obstacles.jpg">
+                <source src="assets/videos/jobsite-outdoor-obstacles.mp4" type="video/mp4" />
+              </video>
+              <div>
+                <p class="risk-label">Terrain contact</p>
+                <h3>Slip on Loose Gravel Slope</h3>
+                <p>Unfinished ground surfaces make traversability depend on traction, slope, gravel depth, and local stability rather than geometry alone.</p>
+              </div>
+            </article>
+            <article>
+              <video controls preload="metadata" poster="assets/img/poster-jobsite-indoor-workface.jpg">
+                <source src="assets/videos/jobsite-indoor-workface.mp4" type="video/mp4" />
+              </video>
+              <div>
+                <p class="risk-label">Work interference</p>
+                <h3>Disturb Worker Dust Pile</h3>
+                <p>A robot may reach its goal but still disrupt ongoing work by kicking loose material into areas that workers have just cleaned.</p>
+              </div>
+            </article>
+            <article>
+              <video controls preload="metadata" poster="assets/img/poster-jobsite-equipment-proximity.jpg">
+                <source src="assets/videos/jobsite-equipment-proximity.mp4" type="video/mp4" />
+              </video>
+              <div>
+                <p class="risk-label">Equipment proximity</p>
+                <h3>Enter Machinery Working Range</h3>
+                <p>Robots need to reason about operating envelopes and blind spots around loaders, excavators, trucks, cranes, and other active equipment.</p>
+              </div>
+            </article>
+            <article>
+              <video controls preload="metadata" poster="assets/img/poster-jobsite-cordon-area.jpg">
+                <source src="assets/videos/jobsite-cordon-area.mp4" type="video/mp4" />
+              </video>
+              <div>
+                <p class="risk-label">Temporary boundary</p>
+                <h3>Enter Cordon Area</h3>
+                <p>Construction restrictions are often temporary and semantic; a tape, barrier, or laydown boundary can invalidate an otherwise passable route.</p>
+              </div>
+            </article>
+            <article>
+              <video controls preload="metadata" poster="assets/img/poster-jobsite-pipe-cover.jpg">
+                <source src="assets/videos/jobsite-pipe-cover.mp4" type="video/mp4" />
+              </video>
+              <div>
+                <p class="risk-label">Fixture contact</p>
+                <h3>Damage Pipe Cover</h3>
+                <p>Temporary covers and unfinished fixtures are part of the site state; damaging them is a navigation failure even without a major collision.</p>
+              </div>
+            </article>
+          </div>
         </div>
       </section>
 
@@ -101,19 +169,25 @@
         <div class="section-heading">
           <p class="eyebrow">Motivation</p>
           <h2 id="why-title">Why Construction Navigation Needs Its Own Benchmark</h2>
+          <p>
+            Construction sites combine mobility, safety, and production constraints that are only
+            partially covered by existing navigation benchmarks. They are not just cluttered indoor
+            spaces, and they are not road networks; they are temporary production systems whose
+            routes, hazards, workers, materials, and equipment change with the construction sequence.
+          </p>
         </div>
         <div class="insight-grid">
           <article>
-            <h3>Geometry is not enough</h3>
-            <p>On active jobsites, a traversable-looking surface may be unsafe, unfinished, reserved for work, or functionally blocked by temporary material staging.</p>
+            <h3>Different from social navigation</h3>
+            <p>Social navigation benchmarks focus on pedestrians, comfort, and interpersonal spacing. On jobsites, people are part of work operations: they clean, install, lift, stage, signal, and coordinate around temporary hazards that a robot must not interrupt.</p>
           </article>
           <article>
-            <h3>Hazards are contextual</h3>
-            <p>A route can become invalid because of a moving truck, active lifting operation, worker activity, temporary barrier, or changing construction sequence.</p>
+            <h3>Different from autonomous driving</h3>
+            <p>Autonomous driving assumes roads, lanes, signs, and relatively standardized traffic rules. Construction navigation has ad hoc access paths, unfinished surfaces, shifting barriers, material laydown zones, and heavy-equipment work envelopes that may not appear in a static map.</p>
           </article>
           <article>
-            <h3>Success is not just arrival</h3>
-            <p>A robot should be evaluated on whether it reaches the target while respecting safety rules, protecting site elements, and minimizing disruption to construction operations.</p>
+            <h3>No shared yardstick yet</h3>
+            <p>Construction robot navigation is still evaluated through custom sites, custom tasks, and custom metrics. Without shared scenes, splits, task definitions, and safety-violation measures, it is difficult to compare methods or quantify real improvement.</p>
           </article>
         </div>
       </section>
@@ -191,14 +265,6 @@
               <li>Test object permanence and semantic recognition under clutter</li>
             </ul>
           </article>
-          <article>
-            <h3>Safety-Rule Navigation</h3>
-            <ul>
-              <li>Avoid crane swing radius, equipment blind spots, excavation edges, and exclusion zones</li>
-              <li>Yield to active work and avoid blocking workers, trucks, or material flow</li>
-              <li>Penalize rule violations even when the robot reaches the goal</li>
-            </ul>
-          </article>
         </div>
         <div class="protocol-grid" aria-label="Benchmark protocol">
           <article>
@@ -247,50 +313,13 @@
       <section class="section" id="demos" aria-labelledby="demos-title">
         <div class="section-heading">
           <p class="eyebrow">Video demos</p>
-          <h2 id="demos-title">Real Jobsite Evidence and Simulation Demos</h2>
+          <h2 id="demos-title">Simulation Demos</h2>
           <p>
-            The real-world clips show the type of construction context the benchmark is designed
-            to reproduce: workers, moving equipment, material piles, indoor unfinished spaces,
-            rough terrain, and temporary access constraints.
+            These demos show the current Isaac Sim and Isaac Lab environment assets that support
+            construction equipment context and robot navigation evaluation.
           </p>
         </div>
         <div class="video-grid">
-          <article>
-            <video controls preload="metadata" poster="assets/img/poster-jobsite-outdoor-obstacles.jpg">
-              <source src="assets/videos/jobsite-outdoor-obstacles.mp4" type="video/mp4" />
-            </video>
-            <div>
-              <h3>Outdoor Jobsite Navigation</h3>
-              <p>Real-world traversal near materials, workers, scaffolding, and active construction zones.</p>
-            </div>
-          </article>
-          <article>
-            <video controls preload="metadata" poster="assets/img/poster-jobsite-material-zone.jpg">
-              <source src="assets/videos/jobsite-material-zone.mp4" type="video/mp4" />
-            </video>
-            <div>
-              <h3>Material Staging Area</h3>
-              <p>Navigation through dense laydown areas where objects carry functional and safety meaning.</p>
-            </div>
-          </article>
-          <article>
-            <video controls preload="metadata" poster="assets/img/poster-jobsite-indoor-workface.jpg">
-              <source src="assets/videos/jobsite-indoor-workface.mp4" type="video/mp4" />
-            </video>
-            <div>
-              <h3>Indoor Workface</h3>
-              <p>Traversal in unfinished interior spaces with temporary work activity and changing access paths.</p>
-            </div>
-          </article>
-          <article>
-            <video controls preload="metadata" poster="assets/img/poster-jobsite-equipment-proximity.jpg">
-              <source src="assets/videos/jobsite-equipment-proximity.mp4" type="video/mp4" />
-            </video>
-            <div>
-              <h3>Equipment Proximity</h3>
-              <p>Navigation near earth-moving equipment where safety depends on work-envelope awareness.</p>
-            </div>
-          </article>
           <article>
             <video controls preload="metadata" poster="assets/img/poster-towercrane.jpg">
               <source src="assets/videos/tower-crane-demo.mp4" type="video/mp4" />
